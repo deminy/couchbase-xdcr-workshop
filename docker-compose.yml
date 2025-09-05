@@ -1,12 +1,5 @@
 x-couchbase-service: &couchbase-service
-  image: deminy/couchbase:7.6.6
-  environment:
-    CB_ADMIN: username
-    CB_ADMIN_PASSWORD: password
-    CB_CLUSTER_RAM_SIZE: 256
-    CB_BUCKETS: test1,test2
-    CB_SERVICES: data
-  entrypoint: ["/entrypoint.sh"]
+  image: couchbase:enterprise-7.6.6
   command: ["couchbase-server"]
 
 services:
