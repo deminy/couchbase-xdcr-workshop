@@ -105,4 +105,38 @@ for cluster in "a" "b" "c" ; do
     --no-progress-bar
 done
 
+# Set up XDCR (Cross Data Center Replication) between clusters.
+#
+# @param $1 Source cluster name, which is also host name of the first node in the cluster, e.g., a1.dev.
+# @param $2 Target cluster name, which is also host name of the first node in the cluster, e.g., b1.dev.
+function xdcr() {
+  source=$1
+  target=$2
+
+  docker compose exec -ti $source /opt/couchbase/bin/couchbase-cli \
+    xdcr-setup \
+    --cluster $source:8091 \
+    --username 'username' \
+    --password 'password' \
+    --create \
+    --xdcr-cluster-name $target \
+    --xdcr-hostname $target \
+    --xdcr-username 'username' \
+    --xdcr-password 'password' \
+    --xdcr-secure-connection 'none'
+
+  docker compose exec -ti $source /opt/couchbase/bin/couchbase-cli \
+    xdcr-replicate \
+    --cluster $source:8091 \
+    --username 'username' \
+    --password 'password' \
+    --create \
+    --xdcr-cluster-name $target \
+    --xdcr-from-bucket test1 \
+    --xdcr-to-bucket   test1
+}
+
+xdcr a1.dev b1.dev
+xdcr b1.dev c1.dev
+
 echo Done.
