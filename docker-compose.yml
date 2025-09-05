@@ -1,0 +1,48 @@
+x-couchbase-service: &couchbase-service
+  image: deminy/couchbase:7.6.6
+  environment:
+    CB_ADMIN: username
+    CB_ADMIN_PASSWORD: password
+    CB_CLUSTER_RAM_SIZE: 256
+    CB_BUCKETS: test1,test2
+    CB_SERVICES: data
+  entrypoint: ["/entrypoint.sh"]
+  command: ["couchbase-server"]
+
+services:
+  a1.dev:
+    <<: *couchbase-service
+    ports:
+      - 40011:18091
+  a2.dev:
+    <<: *couchbase-service
+    ports:
+      - 40012:18091
+  a3.dev:
+    <<: *couchbase-service
+    ports:
+      - 40013:18091
+  b1.dev:
+    <<: *couchbase-service
+    ports:
+      - 40021:18091
+  b2.dev:
+    <<: *couchbase-service
+    ports:
+      - 40022:18091
+  b3.dev:
+    <<: *couchbase-service
+    ports:
+      - 40023:18091
+  c1.dev:
+    <<: *couchbase-service
+    ports:
+      - 40031:18091
+  c2.dev:
+    <<: *couchbase-service
+    ports:
+      - 40032:18091
+  c3.dev:
+    <<: *couchbase-service
+    ports:
+      - 40033:18091
