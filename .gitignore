@@ -1,0 +1,4 @@
+# Ignore 3rd party packages
+/composer.lock
+/composer.phar
+/www/vendor/*

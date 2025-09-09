@@ -1,0 +1,22 @@
+{
+    "name": "deminy/couchbase-server-worksho",
+    "description": "A hands-on workshop demonstrating key Couchbase features using local Docker clusters.",
+    "license": "MIT",
+    "type": "project",
+    "require": {
+        "php": "~8.4.0",
+        "ext-couchbase": ">=4.3.0",
+        "couchbase/couchbase": "~4.3.0"
+    },
+    "require-dev": {
+        "swoole/ide-helper": "~6.0"
+    },
+    "config" : {
+        "platform": {
+            "php": "8.4.0",
+            "ext-couchbase": "4.3.0"
+        },
+      "vendor-dir": "./www/vendor"
+    },
+    "prefer-stable": true
+}

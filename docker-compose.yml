@@ -66,6 +66,14 @@ services:
     networks:
       couchbase-network:
         ipv4_address: 172.20.3.3
+  app:
+    image: deminy/php-couchbase:4.3.0-php8.4
+    environment:
+      DISABLE_DEFAULT_SERVER: 1
+    volumes:
+      - ./www:/var/www
+    networks:
+      couchbase-network:
 
 networks:
   couchbase-network:
