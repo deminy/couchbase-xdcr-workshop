@@ -1,41 +1,74 @@
-x-couchbase-service: &couchbase-service
+x-couchbase-server: &couchbase-server
   image: couchbase:enterprise-7.6.6
   command: ["couchbase-server"]
 
 services:
   a1.dev:
-    <<: *couchbase-service
+    <<: *couchbase-server
     ports:
       - 40011:18091
+    networks:
+      couchbase-network:
+        ipv4_address: 172.20.1.1
   a2.dev:
-    <<: *couchbase-service
+    <<: *couchbase-server
     ports:
       - 40012:18091
+    networks:
+      couchbase-network:
+        ipv4_address: 172.20.1.2
   a3.dev:
-    <<: *couchbase-service
+    <<: *couchbase-server
     ports:
       - 40013:18091
+    networks:
+      couchbase-network:
+        ipv4_address: 172.20.1.3
   b1.dev:
-    <<: *couchbase-service
+    <<: *couchbase-server
     ports:
       - 40021:18091
+    networks:
+      couchbase-network:
+        ipv4_address: 172.20.2.1
   b2.dev:
-    <<: *couchbase-service
+    <<: *couchbase-server
     ports:
       - 40022:18091
+    networks:
+      couchbase-network:
+        ipv4_address: 172.20.2.2
   b3.dev:
-    <<: *couchbase-service
+    <<: *couchbase-server
     ports:
       - 40023:18091
+    networks:
+      couchbase-network:
+        ipv4_address: 172.20.2.3
   c1.dev:
-    <<: *couchbase-service
+    <<: *couchbase-server
     ports:
       - 40031:18091
+    networks:
+      couchbase-network:
+        ipv4_address: 172.20.3.1
   c2.dev:
-    <<: *couchbase-service
+    <<: *couchbase-server
     ports:
       - 40032:18091
+    networks:
+      couchbase-network:
+        ipv4_address: 172.20.3.2
   c3.dev:
-    <<: *couchbase-service
+    <<: *couchbase-server
     ports:
       - 40033:18091
+    networks:
+      couchbase-network:
+        ipv4_address: 172.20.3.3
+
+networks:
+  couchbase-network:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/22
