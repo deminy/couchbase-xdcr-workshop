@@ -58,6 +58,18 @@ for cluster in "a" "b" "c" ; do
         --ip-family ipv4 \
         --node-to-node-encryption off
 
+      # Create a second admin user for the Couchbase cluster.
+      docker compose exec -ti ${node_name} /opt/couchbase/bin/couchbase-cli \
+        user-manage \
+        --cluster ${cluster_name}:8091 \
+        --username 'username' \
+        --password 'password' \
+        --set \
+        --rbac-username 'admin' \
+        --rbac-password 'password' \
+        --roles 'admin' \
+        --auth-domain local
+
       # Create buckets in the Couchbase cluster.
       #
       # @see https://docs.couchbase.com/server/current/cli/cbcli/couchbase-cli-bucket-create.html
@@ -73,6 +85,18 @@ for cluster in "a" "b" "c" ; do
           --compression-mode active \
           --enable-flush 1 \
           --wait
+
+        # Create a user for each bucket with "data_reader" role.
+        docker compose exec -ti ${node_name} /opt/couchbase/bin/couchbase-cli \
+          user-manage \
+          --cluster ${cluster_name}:8091 \
+          --username 'username' \
+          --password 'password' \
+          --set \
+          --rbac-username ${bucket_name} \
+          --rbac-password 'password' \
+          --roles "data_reader[${bucket_name}]" \
+          --auth-domain local
       done
     else
       # Add new node to the cluster.
